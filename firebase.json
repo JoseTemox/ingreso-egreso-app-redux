@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "control-ingresos-egresos",
+      "public": "dist/control-ingresos-egresos",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

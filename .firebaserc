@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ingreso-egreso-app-35c8b": {
+      "hosting": {
+        "control-ingresos-egresos": [
+          "ingreso-egreso-app-35c8b"
+        ]
+      }
+    }
+  }
+}
