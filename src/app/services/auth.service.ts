@@ -8,17 +8,24 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import * as authActions from '../auth/auth.actions';
 import { Subscription } from 'rxjs';
+import * as incomeExpenseActions from '../income-expenses/income-expense.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   userSubscriptions: Subscription;
+  private _user: User;
   constructor(
     private angularFireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private store: Store<AppState>
   ) {}
+
+  get user() {
+    // return { ...this._user };
+    return this._user;
+  }
 
   initAuthListener() {
     this.angularFireAuth.authState.subscribe((fUser) => {
@@ -29,12 +36,15 @@ export class AuthService {
           .subscribe((fireStoreUser: any) => {
             // console.log(fireStoreUser);
             const user = User.fromFireBase(fireStoreUser);
+            this._user = user;
             // console.log(user.email);
             this.store.dispatch(authActions.setUser({ user }));
           });
       } else {
+        this._user = null;
         this.userSubscriptions.unsubscribe();
         this.store.dispatch(authActions.unSetUser());
+        this.store.dispatch(incomeExpenseActions.unSetItems());
       }
     });
   }
